@@ -28,7 +28,7 @@ class ProductDetailsScreen extends StatelessWidget {
               title: Text(loadedProduct.title),
               background:  Hero(
                 tag: loadedProduct.id!,
-                child: Container(
+                child: SizedBox(
                   height: 300,
                   width: double.infinity,
                   child: Image.network(loadedProduct.imageUrl,fit: BoxFit.cover,),
@@ -40,7 +40,7 @@ class ProductDetailsScreen extends StatelessWidget {
               const SizedBox(height: 10,),
 
               Text('₹ ${loadedProduct.price}',
-                style: TextStyle(fontSize: 20,color: Colors.grey,),
+                style: const TextStyle(fontSize: 20,color: Colors.grey,),
                 textAlign: TextAlign.center,
               ),
 

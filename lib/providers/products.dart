@@ -1,8 +1,7 @@
 import 'dart:convert';
 
 import 'package:flutter/cupertino.dart';
-import 'package:shop_app/models/http_exception.dart';
-
+import '../models/http_exception.dart';
 import 'product.dart';
 import 'package:http/http.dart' as http;
 

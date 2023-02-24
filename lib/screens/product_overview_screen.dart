@@ -1,9 +1,9 @@
-import 'package:flutter/cupertino.dart';
+
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:shop_app/screens/cart_screen.dart';
-import 'package:shop_app/widgets/app_drawer.dart';
-import 'package:shop_app/widgets/products_grid.dart';
+import '../screens/cart_screen.dart';
+import '../widgets/app_drawer.dart';
+import '../widgets/products_grid.dart';
 import '../providers/cart.dart';
 import '../providers/products.dart';
 import '../widgets/badge.dart';

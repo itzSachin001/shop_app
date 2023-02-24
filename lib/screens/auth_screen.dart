@@ -1,10 +1,9 @@
-import 'dart:io';
+
 import 'dart:math';
 
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:shop_app/providers/auth.dart';
-import 'package:shop_app/screens/product_overview_screen.dart';
+import '../providers/auth.dart';
 import '../models/http_exception.dart';
 
 enum AuthMode { Signup, Login }
@@ -30,12 +29,12 @@ class AuthScreen extends StatelessWidget {
                 ],
                 begin: Alignment.topLeft,
                 end: Alignment.bottomRight,
-                stops: [0, 1],
+                stops: const [0, 1],
               ),
             ),
           ),
           SingleChildScrollView(
-            child: Container(
+            child: SizedBox(
               height: deviceSize.height,
               width: deviceSize.width,
               child: Column(
@@ -53,8 +52,8 @@ class AuthScreen extends StatelessWidget {
                       decoration: BoxDecoration(
                         borderRadius: BorderRadius.circular(20),
                         color: Colors.deepOrange.shade900,
-                        boxShadow: [
-                          const BoxShadow(
+                        boxShadow: const [
+                          BoxShadow(
                             blurRadius: 8,
                             color: Colors.black26,
                             offset: Offset(0, 2),
@@ -86,21 +85,40 @@ class AuthScreen extends StatelessWidget {
   }
 }
 
-class AuthCard extends StatefulWidget {
+class AuthCard extends StatefulWidget  {
+  const AuthCard({super.key});
 
   @override
   _AuthCardState createState() => _AuthCardState();
 }
 
-class _AuthCardState extends State<AuthCard> {
+class _AuthCardState extends State<AuthCard>{
   final GlobalKey<FormState> _formKey = GlobalKey();
   AuthMode _authMode = AuthMode.Login;
-  Map<String, String> _authData = {
+  final Map<String, String> _authData = {
     'email': '',
     'password': '',
   };
   var _isLoading = false;
   final _passwordController = TextEditingController();
+  // late AnimationController _controller;
+  // late Animation<Size> _heightAnimation;
+
+  // @override
+  // void initState() {
+  //   super.initState();
+  //   // _controller = AnimationController(vsync: this,duration: Duration(milliseconds: 1000));
+  //   // _heightAnimation = Tween<Size>(begin: const Size(double.infinity,260),end: const Size(double.infinity,320))
+  //   //     .animate(CurvedAnimation(parent: _controller, curve: Curves.elasticInOut));
+  //
+  //   // _heightAnimation.addListener(() => setState(() {}) );
+  // }
+
+  // @override
+  // void dispose() {
+  //   super.dispose();
+  //   // _controller.dispose();
+  // }
 
 
   void _showErrorDialog(String message){
@@ -147,13 +165,11 @@ class _AuthCardState extends State<AuthCard> {
         errorMessage = 'Invalid password.';
       }
       _showErrorDialog(errorMessage);
-    } catch (error) {
+     } catch (error) {
       const errorMessage =
           'Could not authenticate. Please try again later.';
       _showErrorDialog(errorMessage);
     }
-
-
     setState(() {
       _isLoading = false;
     });
@@ -164,10 +180,12 @@ class _AuthCardState extends State<AuthCard> {
       setState(() {
         _authMode = AuthMode.Signup;
       });
+      // _controller.forward();
     } else {
       setState(() {
         _authMode = AuthMode.Login;
       });
+      // _controller.reverse();
     }
   }
 
@@ -179,10 +197,13 @@ class _AuthCardState extends State<AuthCard> {
         borderRadius: BorderRadius.circular(10.0),
       ),
       elevation: 8.0,
-      child: Container(
-        height: _authMode == AuthMode.Signup ? 320 : 260,
+      child:AnimatedContainer(
+        // height: _authMode == AuthMode.Signup ? 320 : 260,
+        duration: const Duration(milliseconds: 1000),
+        curve: Curves.elasticOut,
+        // height: _heightAnimation.value.height,
         constraints:
-            BoxConstraints(minHeight: _authMode == AuthMode.Signup ? 320 : 260),
+            BoxConstraints(minHeight:_authMode == AuthMode.Signup ? 320 : 260,),
         width: deviceSize.width * 0.75,
         padding:const EdgeInsets.all(16.0),
         child: Form(

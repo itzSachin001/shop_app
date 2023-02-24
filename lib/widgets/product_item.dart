@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:shop_app/providers/auth.dart';
-import 'package:shop_app/providers/cart.dart';
-import 'package:shop_app/screens/product_details_screen.dart';
+import '../providers/auth.dart';
+import '../providers/cart.dart';
+import '../screens/product_details_screen.dart';
 
 import '../providers/product.dart';
 
@@ -55,7 +55,15 @@ class ProductItem extends StatelessWidget {
               onTap: (){
                 Navigator.of(context).pushNamed(ProductDetailsScreen.routeName, arguments: product.id);
               },
-              child: Image.network(product.imageUrl,fit: BoxFit.cover,)),
+              child: Hero(
+                tag: product.id!,
+                child: FadeInImage(
+                  placeholder: const AssetImage("assets/images/default_product.png"),
+                  image: NetworkImage(product.imageUrl),
+                  fit: BoxFit.cover,
+                ),
+              ),
+          ),
         ),
     );
   }

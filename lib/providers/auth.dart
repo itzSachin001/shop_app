@@ -3,7 +3,7 @@ import 'dart:async';
 import 'package:flutter/widgets.dart';
 import 'package:http/http.dart' as http;
 import 'package:shared_preferences/shared_preferences.dart';
-import 'package:shop_app/models/http_exception.dart';
+import '../models/http_exception.dart';
 
 class Auth with ChangeNotifier{
   String? _token;
@@ -48,12 +48,12 @@ class Auth with ChangeNotifier{
       final userData = json.encode({
         'token': _token,
         'userId': _userId,
-        'expiryDate': _expiryDate,
+        'expiryDate': _expiryDate!.toIso8601String(),
       });
       prefs.setString('userData', userData);
 
     }catch (error){
-      rethrow;
+      throw error;
     }
 
   }
@@ -71,7 +71,7 @@ class Auth with ChangeNotifier{
     if(!prefs.containsKey('userData')){
       return false;
     }
-    final extractedUserData = json.decode(prefs.getString('userData')!) as Map<String,Object>;
+    final extractedUserData = json.decode(prefs.getString('userData').toString());
     final expiryDate = DateTime.parse(extractedUserData['expiryDate'].toString());
     if(expiryDate.isBefore(DateTime.now())){
       return false;
